@@ -38,10 +38,49 @@ export const complaintsApiSlice = apiSlice.injectEndpoints({
         } else return [{ type: "Complaint", id: "LIST" }];
       },
     }),
+    // 7_different operations
+    addNewComplaint: builder.mutation({
+      query: (initialComplaint) => ({
+        url: "/complaints",
+        method: "POST",
+        body: {
+          ...initialComplaint,
+        },
+      }),
+      invalidatesTags: [{ type: "Complaint", id: "LIST" }],
+    }),
+    updateComplaint: builder.mutation({
+      query: (initialComplaint) => ({
+        url: "/complaints",
+        method: "PATCH",
+        body: {
+          ...initialComplaint,
+        },
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: "Complaint", id: arg.id },
+      ],
+    }),
+    deleteComplaint: builder.mutation({
+      query: ({ id }) => ({
+        url: `/complaints`,
+        method: "DELETE",
+        body: { id },
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: "Complaint", id: arg.id },
+      ],
+    }),
+    // --end of operations --
   }),
 });
 
-export const { useGetComplaintsQuery } = complaintsApiSlice;
+export const {
+  useGetComplaintsQuery,
+  useAddNewComplaintMutation,
+  useUpdateComplaintMutation,
+  useDeleteComplaintMutation,
+} = complaintsApiSlice;
 
 // returns the query result object
 export const selectComplaintsResult =
