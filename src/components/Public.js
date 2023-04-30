@@ -13,7 +13,9 @@ const Public = () => {
           Our online customer complaint system allows you to make complaints
           efficiently. Our staffs will handle them within 3 working days.
         </p>
-        <Link to="/login">Login Account</Link>
+        <Link to="/login" id="login">
+          Login Account
+        </Link>
       </main>
       <footer>
         <address className="public__addr">

@@ -79,8 +79,13 @@ body {
   background-position: top right;
   background-blend-mode: multiply;
 }
+
 background-image {
   opacity: 0.2;
+}
+
+p {
+  margin: 5vh 0;
 }
 
 code {
@@ -102,6 +107,10 @@ select {
   flex-flow: column nowrap;
 }
 
+#login {
+  color: #ffe8b5;
+  font-weight: bold;
+}
 a {
   text-decoration: none;
 }

@@ -8,11 +8,9 @@ const NewComplaint = () => {
   // extract array of selectAllUsers from the store, which is then passed as a prop to the NewComplaintForm component
   const users = useSelector(selectAllUsers);
 
-  const content = users ? (
-    <NewComplaintForm users={users} />
-  ) : (
-    <p>Loading...</p>
-  );
+  if (!users?.length) return <p>Not Currently Available</p>;
+
+  const content = <NewComplaintForm users={users} />;
 
   return content;
 };
