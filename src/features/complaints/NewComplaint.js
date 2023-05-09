@@ -8,6 +8,9 @@ const NewComplaint = () => {
   // extract array of selectAllUsers from the store, which is then passed as a prop to the NewComplaintForm component
   const users = useSelector(selectAllUsers);
 
+  // DEBUG: array of 2 objects
+  console.log("users:", users);
+
   if (!users?.length) return <p>Not Currently Available</p>;
 
   const content = <NewComplaintForm users={users} />;

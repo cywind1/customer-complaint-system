@@ -8,7 +8,11 @@ const ComplaintsList = () => {
     isSuccess,
     isError,
     error,
-  } = useGetComplaintsQuery();
+  } = useGetComplaintsQuery("complaintsList", {
+    pollingInterval: 60000,
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
+  });
 
   let content;
 

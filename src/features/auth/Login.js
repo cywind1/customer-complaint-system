@@ -5,6 +5,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "./authSlice";
 import { useLoginMutation } from "./authApiSlice";
+// Import custom hook for persisting user login
+import usePersist from "../../hooks/usePersist";
 // Define Login component
 const Login = () => {
   // Define component-level state and references
@@ -13,6 +15,7 @@ const Login = () => {
   const [username, setUsername] = useState(""); // State for the username input value
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [persist, setPersist] = usePersist();
 
   // Define necessary hooks and Redux store reference
   const navigate = useNavigate(); // Hook for programmatic navigation
@@ -60,6 +63,9 @@ const Login = () => {
   const handleUserInput = (e) => setUsername(e.target.value);
   // Handle password input change
   const handlePwdInput = (e) => setPassword(e.target.value);
+  // Handle "Trust This Device" checkbox toggle
+  const handleToggle = () => setPersist((prev) => !prev);
+
   // Set error message class based on whether or not there is an error message to display
   const errClass = errMsg ? "errmsg" : "offscreen";
 
@@ -100,6 +106,17 @@ const Login = () => {
             required
           />
           <button className="form__submit-button">Sign In</button>
+          {/* 10.7 */}
+          <label htmlFor="persist" className="form__persist">
+            <input
+              type="checkbox"
+              className="form__checkbox"
+              id="persist"
+              onChange={handleToggle}
+              checked={persist}
+            />
+            Trust This Device
+          </label>
         </form>
       </main>
       <footer>

@@ -21,7 +21,8 @@ export const complaintsApiSlice = apiSlice.injectEndpoints({
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError;
       },
-      keepUnusedDataFor: 5,
+      // Once the subscription is removed (e.g. when last component subscribed to the data unmounts), after an amount of time (default 60 seconds), the data will be removed from the cache.
+      // keepUnusedDataFor: 5,
       transformResponse: (responseData) => {
         const loadedComplaints = responseData.map((complaint) => {
           complaint.id = complaint._id;
