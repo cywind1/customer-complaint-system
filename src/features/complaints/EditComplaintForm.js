@@ -7,8 +7,15 @@ import {
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import useAuth from "../../hooks/useAuth";
+
+// BUG: const EditComplaintForm = (complaint, users)
+// Warning: A component is changing an uncontrolled input to be controlled. This is likely caused by the value changing from undefined to a defined value, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component.
+// Reason: the input value is initially undefined and then set to a defined value, which causes it to become a controlled input. This can happen if the component's state is not initialized properly or if the value of the input is not properly set in the component's state.
+// !Learn: curly braces {} -> to destructure the passed object
 
 const EditComplaintForm = ({ complaint, users }) => {
+  const { isManager, isAdmin } = useAuth();
   // Define state variables for the update and delete mutations
   const [updateComplaint, { isLoading, isSuccess, isError, error }] =
     useUpdateComplaintMutation();
@@ -126,6 +133,21 @@ const EditComplaintForm = ({ complaint, users }) => {
   // ?? = when return null, "" is the backup return
   const errContent = (error?.data?.message || delerror?.data?.message) ?? "";
 
+  let deleteButton = null;
+  // 11.10
+  // only manager / admin can get access to delete button
+  if (isManager || isAdmin) {
+    deleteButton = (
+      <button
+        className="icon-button"
+        title="Delete"
+        onClick={onDeleteComplaintClicked}
+      >
+        <FontAwesomeIcon icon={faTrashCan} />
+      </button>
+    );
+  }
+
   const content = (
     <>
       <p className={errClass}>{errContent}</p>
@@ -144,13 +166,8 @@ const EditComplaintForm = ({ complaint, users }) => {
             >
               <FontAwesomeIcon icon={faSave} />
             </button>
-            <button
-              className="icon-button"
-              title="Delete"
-              onClick={onDeleteComplaintClicked}
-            >
-              <FontAwesomeIcon icon={faTrashCan} />
-            </button>
+            {/* Delete exists, but accessible only to certain roles */}
+            {deleteButton}
           </div>
         </div>
         <label className="form__label" htmlFor="complaint-title">
