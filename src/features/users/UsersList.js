@@ -18,12 +18,17 @@ const UsersList = () => {
     content = <p className="errmsg">{error?.data?.message}</p>;
   }
 
+  // BOTH: using the optional chaining operator (?.) to ensure that the map() method is only called if ids is not null or undefined
+  // BEFORE: if ids is null or undefined, tableContent will be assigned the value of false, which is not valid JSX
+  // const tableContent =
+  //   ids?.length && ids.map((userId) => <User key={userId} userId={userId} />);
+  // !Learn:  if ids is null or undefined, tableContent will be assigned the value of null, which is a valid JSX value and will not cause any errors
+
   if (isSuccess) {
     const { ids } = users;
 
-    const tableContent = ids?.length
-      ? ids.map((userId) => <User key={userId} userId={userId} />)
-      : null;
+    const tableContent =
+      ids?.length && ids.map((userId) => <User key={userId} userId={userId} />);
 
     content = (
       <table className="table table--users">
