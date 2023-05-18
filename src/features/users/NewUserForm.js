@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { ROLES } from "../../config/roles";
+import useTitle from "../../hooks/useTitle";
 
 // https://towardsdatascience.com/everything-you-need-to-know-about-regular-expressions-8f622fe10b03#:~:text=Regular%20expressions%20are%20useful%20in%20search%20and%20replace%20operations.,pattern%20in%20the%20replacement%20string.
 // REGEX = Regular expressions are useful in search and replace operations
@@ -12,6 +13,7 @@ const USER_REGEX = /^[A-z]{3,20}$/;
 const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/;
 
 const NewUserForm = () => {
+  useTitle("New User");
   // https://tkdodo.eu/blog/mastering-mutations-in-react-query
   // useMutation will track the state of a mutation, it'll give you loading, error and status fields to make it easy for you to display what's going on to your users.
   const [addNewUser, { isLoading, isSuccess, isError, error }] =

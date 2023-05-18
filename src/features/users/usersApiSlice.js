@@ -10,10 +10,20 @@ const initialState = usersAdapter.getInitialState();
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
-      query: () => "/users",
-      validateStatus: (response, result) => {
-        return response.status === 200 && !result.isError;
-      },
+      // 12.6 validateStatus inside, not outside query
+      query: () => ({
+        url: "/users",
+        validateStatus: (response, result) => {
+          return response.status === 200 && !result.isError;
+        },
+      }),
+      //   query: () => "/users",
+      //   // https://redux-toolkit.js.org/rtk-query/api/fetchBaseQuery
+      //   // a backend API always returns a 200,
+      //   // but sets an `isError` property when there is an error
+      //   validateStatus: (response, result) => {
+      //     return response.status === 200 && !result.isError;
+      //   },
       keepUnusedDataFor: 5,
       transformResponse: (responseData) => {
         const loadedUsers = responseData.map((user) => {

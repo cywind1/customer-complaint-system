@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 
 // 11.3
 import useAuth from "../../hooks/useAuth";
+import useTitle from "../../hooks/useTitle";
 
 const Welcome = () => {
   // Extracting user info using the useAuth hook
   const { username, isManager, isAdmin } = useAuth();
-
+  useTitle(`Welcome ${username}`);
   // Getting the current date and time
   const date = new Date();
   const today = new Intl.DateTimeFormat("en-US", {

@@ -7,8 +7,10 @@ import { setCredentials } from "./authSlice";
 import { useLoginMutation } from "./authApiSlice";
 // Import custom hook for persisting user login
 import usePersist from "../../hooks/usePersist";
+import useTitle from "../../hooks/useTitle";
 // Define Login component
 const Login = () => {
+  useTitle("User Login");
   // Define component-level state and references
   const userRef = useRef(); // Ref for the username input element
   const errRef = useRef();

@@ -17,10 +17,12 @@ import Prefetch from "./features/auth/Prefetch";
 import PersistLogin from "./features/auth/PersistLogin";
 import RequireAuth from "./features/auth/RequireAuth";
 import { ROLES } from "./config/roles";
+import useTitle from "./hooks/useTitle";
 
 // it is necessary to have an element inside a Route component in React.
 // If without an element -> runtime error
 function App() {
+  useTitle("Customer Complaints System");
   return (
     <Routes>
       {/* Route for the top-level layout of the application */}

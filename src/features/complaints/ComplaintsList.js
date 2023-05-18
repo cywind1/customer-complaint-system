@@ -6,9 +6,12 @@
 import { useGetComplaintsQuery } from "./complaintsApiSlice";
 import Complaint from "./Complaint";
 import useAuth from "../../hooks/useAuth";
+import PulseLoader from "react-spinners/PulseLoader";
+import useTitle from "../../hooks/useTitle";
 
 // define the ComplaintsList component
 const ComplaintsList = () => {
+  useTitle("Customer Complaints System: Complaints List");
   // get the authenticated user's information using the useAuth hook
   const { username, isManager, isAdmin } = useAuth();
   const {
@@ -26,8 +29,10 @@ const ComplaintsList = () => {
   // declare a content variable to hold the component's content
   let content;
 
-  if (isLoading) content = <p>Loading...</p>; // if the complaints are still loading, display a loading message
-
+  // 12.13 PulseLoader, replace Loading...
+  if (isLoading) content = <PulseLoader color={"#FFF"} />;
+  // if (isLoading) content = <p>Loading...</p>;
+  // if the complaints are still loading, display a loading message
   if (isError) {
     // if an error occurred while fetching the complaints
     content = <p className="errmsg">{error?.data?.message}</p>; // display an error message

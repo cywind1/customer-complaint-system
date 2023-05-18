@@ -1,15 +1,20 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { useGetComplaintsQuery } from "./complaintsApiSlice";
+import { memo } from "react";
 
-import { useSelector } from "react-redux";
-import { selectComplaintById } from "./complaintsApiSlice";
+// import { useSelector } from "react-redux";
+// import { selectComplaintById } from "./complaintsApiSlice";
 
 const Complaint = ({ complaintId }) => {
-  const complaint = useSelector((state) =>
-    selectComplaintById(state, complaintId)
-  );
-
+  // const complaint = useSelector((state) => selectComplaintById(state, complaintId));
+  // 12.8 add useGetComplaintsQuery & memo, getting data in a different way
+  const { complaint } = useGetComplaintsQuery("complaintsList", {
+    selectFromResult: ({ data }) => ({
+      complaint: data?.entities[complaintId],
+    }),
+  });
   const navigate = useNavigate();
 
   if (complaint) {
@@ -50,4 +55,9 @@ const Complaint = ({ complaintId }) => {
     );
   } else return null;
 };
-export default Complaint;
+
+const memoizedComplaint = memo(Complaint);
+
+export default memoizedComplaint;
+
+// export default Complaint;

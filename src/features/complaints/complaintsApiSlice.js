@@ -17,10 +17,17 @@ const initialState = complaintsAdapter.getInitialState();
 export const complaintsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getComplaints: builder.query({
-      query: () => "/complaints",
-      validateStatus: (response, result) => {
-        return response.status === 200 && !result.isError;
-      },
+      // 12.6 validateStatus inside, not outside query
+      query: () => ({
+        url: "/complaints",
+        validateStatus: (response, result) => {
+          return response.status === 200 && !result.isError;
+        },
+      }),
+      //   query: () => "/complaints",
+      //   validateStatus: (response, result) => {
+      //     return response.status === 200 && !result.isError;
+      //   },
       // Once the subscription is removed (e.g. when last component subscribed to the data unmounts), after an amount of time (default 60 seconds), the data will be removed from the cache.
       // keepUnusedDataFor: 5,
       transformResponse: (responseData) => {
