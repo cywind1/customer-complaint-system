@@ -14,7 +14,9 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
-  devTools: true,
+  // 13.1 changes on react-devtools
+  devTools: false,
+  //   devTools: true,
 });
 
 setupListeners(store.dispatch);

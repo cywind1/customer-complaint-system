@@ -8,7 +8,9 @@ import { setCredentials } from "../../features/auth/authSlice";
 // a small wrapper around fetch that aims to simplify HTTP requests
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:3500",
+  // 13.1 connection between frontend & backend
+  // baseUrl: "http://localhost:3500",
+  baseUrl: "https://complaints-system-api.onrender.com/",
   // for HTTP secure cookies
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
